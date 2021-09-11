@@ -6,8 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.example.thesocialapp.databinding.ActivityFeedBinding
+import com.example.thesocialapp.databinding.ActivityRegisterBinding
 
 class ActivityFeed : AppCompatActivity() {
+    private lateinit var binding: ActivityFeedBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        FirebaseAuth.getInstance().signOut()
@@ -17,7 +21,15 @@ class ActivityFeed : AppCompatActivity() {
             return
         }
 
-        setContentView(R.layout.activity_feed)
+        binding = ActivityFeedBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.signOut.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun verifyUserIsLoggedIn(): Boolean {

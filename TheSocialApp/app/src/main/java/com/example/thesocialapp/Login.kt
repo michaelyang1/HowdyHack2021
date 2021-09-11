@@ -42,7 +42,11 @@ class Login : AppCompatActivity() {
         // Firebase authentication to create new user with email and password
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                if (it.isSuccessful) return@addOnCompleteListener
+                if (it.isSuccessful) {
+                    intent = Intent(this, ActivityFeed::class.java)
+                    startActivity(intent)
+                    return@addOnCompleteListener
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to sign in user: ${it.message}", Toast.LENGTH_SHORT).show()

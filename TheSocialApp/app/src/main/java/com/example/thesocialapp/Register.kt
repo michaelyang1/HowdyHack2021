@@ -27,7 +27,6 @@ class Register : AppCompatActivity() {
 
         binding.buttonRegister.setOnClickListener {
             performRegister()
-            saveUserToFirebaseDatabase()
         }
     }
 
@@ -44,7 +43,10 @@ class Register : AppCompatActivity() {
         // Firebase authentication to create new user with email and password
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                if (it.isSuccessful) return@addOnCompleteListener
+                if (it.isSuccessful) {
+                    saveUserToFirebaseDatabase()
+                    return@addOnCompleteListener
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
