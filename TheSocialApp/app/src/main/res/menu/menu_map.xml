@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_add"
+        android:title="Add"
+        android:icon="@drawable/ic_baseline_group_add_24"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_feed"
         android:title="Feed"
         android:icon="@drawable/ic_baseline_feed_24"
