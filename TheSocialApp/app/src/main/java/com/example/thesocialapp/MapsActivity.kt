@@ -2,7 +2,7 @@ package com.example.thesocialapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+import android.location.Location
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -10,11 +10,25 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.thesocialapp.databinding.ActivityMapsBinding
+//import com.google.android.libraries.places.api.Places
+//import com.google.android.libraries.places.api.model.Place
+//import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
+//import com.google.android.libraries.places.api.net.PlacesClient
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+//    private lateinit var placesClient: PlacesClient
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+//    private var locationPermissionGranted = false
+//
+//    // The geographical location where the device is currently located. That is, the last-known
+//    // location retrieved by the Fused Location Provider.
+//    private var lastKnownLocation: Location? = null
+//    private var likelyPlaceNames: Array<String?> = arrayOfNulls(0)
+//    private var likelyPlaceAddresses: Array<String?> = arrayOfNulls(0)
+//    private var likelyPlaceAttributions: Array<List<*>?> = arrayOfNulls(0)
+//    private var likelyPlaceLatLngs: Array<LatLng?> = arrayOfNulls(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,17 +54,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
         val Evans = LatLng(30.616586, -96.339496)
         val MSC = LatLng(30.611885, -96.342063)
         val Kyle = LatLng(30.610364, -96.341214)
 
-
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.addMarker(MarkerOptions().position(Evans).title("Evans Library"))
         mMap.addMarker(MarkerOptions().position(MSC).title("Memorial Student Center"))
         mMap.addMarker(MarkerOptions().position(Kyle).title("Kyle Field"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(Kyle))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MSC, 16f))
     }
 }
