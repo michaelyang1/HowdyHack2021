@@ -30,6 +30,11 @@ class ActivityFeed : AppCompatActivity() {
             intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
+
+        binding.button.setOnClickListener {
+            intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun verifyUserIsLoggedIn(): Boolean {
