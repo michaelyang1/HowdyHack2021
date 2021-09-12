@@ -10,15 +10,16 @@
         android:id="@+id/email_login"
         android:layout_width="260dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="377dp"
+        android:layout_marginBottom="380dp"
+        android:background="@drawable/rounded_textbook"
         android:ems="10"
         android:hint="Email"
-        android:textColorHint="@color/white"
         android:inputType="textEmailAddress"
-        android:background="@drawable/rounded_textbook"
         android:paddingLeft="16dp"
+        android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -61,15 +62,12 @@
         app:layout_constraintVertical_bias="0.186" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/email_login"
+        android:id="@+id/logo_login"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.63"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
