@@ -42,7 +42,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
+        val Evans = LatLng(30.616586, -96.339496)
+        val MSC = LatLng(30.611885, -96.342063)
+        val Kyle = LatLng(30.610364, -96.341214)
+
+
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.addMarker(MarkerOptions().position(Evans).title("Evans Library"))
+        mMap.addMarker(MarkerOptions().position(MSC).title("Memorial Student Center"))
+        mMap.addMarker(MarkerOptions().position(Kyle).title("Kyle Field"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Kyle))
     }
 }
