@@ -1,39 +1,28 @@
+
 package com.example.thesocialapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.location.Location
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.thesocialapp.databinding.ActivityMapsBinding
-//import com.google.android.libraries.places.api.Places
-//import com.google.android.libraries.places.api.model.Place
-//import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
-//import com.google.android.libraries.places.api.net.PlacesClient
+import com.example.thesocialapp.databinding.ActivityMapBinding
+import com.google.firebase.auth.FirebaseAuth
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-//    private lateinit var placesClient: PlacesClient
-
+class ActivityMap : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
-    private lateinit var binding: ActivityMapsBinding
-//    private var locationPermissionGranted = false
-//
-//    // The geographical location where the device is currently located. That is, the last-known
-//    // location retrieved by the Fused Location Provider.
-//    private var lastKnownLocation: Location? = null
-//    private var likelyPlaceNames: Array<String?> = arrayOfNulls(0)
-//    private var likelyPlaceAddresses: Array<String?> = arrayOfNulls(0)
-//    private var likelyPlaceAttributions: Array<List<*>?> = arrayOfNulls(0)
-//    private var likelyPlaceLatLngs: Array<LatLng?> = arrayOfNulls(0)
+    private lateinit var binding: ActivityMapBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMapsBinding.inflate(layoutInflater)
+        binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -62,5 +51,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(MSC).title("Memorial Student Center"))
         mMap.addMarker(MarkerOptions().position(Kyle).title("Kyle Field"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MSC, 16f))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_map, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+
+        if (id == R.id.action_feed) {
+            intent = Intent(this, ActivityFeed::class.java)
+            startActivity(intent)
+            return true;
+        }
+        if (id == R.id.action_logout) {
+            FirebaseAuth.getInstance().signOut()
+            intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

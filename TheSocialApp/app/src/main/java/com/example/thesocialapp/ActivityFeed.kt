@@ -4,10 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.example.thesocialapp.databinding.ActivityFeedBinding
-import com.example.thesocialapp.databinding.ActivityRegisterBinding
 
 class ActivityFeed : AppCompatActivity() {
     private lateinit var binding: ActivityFeedBinding
@@ -24,17 +24,6 @@ class ActivityFeed : AppCompatActivity() {
         binding = ActivityFeedBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        binding.signOut.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            intent = Intent(this, Login::class.java)
-            startActivity(intent)
-        }
-
-        binding.button.setOnClickListener {
-            intent = Intent(this, MapsActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun verifyUserIsLoggedIn(): Boolean {
@@ -51,5 +40,28 @@ class ActivityFeed : AppCompatActivity() {
         } else {
             true
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_feed, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+
+        if (id == R.id.action_map) {
+            intent = Intent(this, ActivityMap::class.java)
+            startActivity(intent)
+            return true;
+        }
+        if (id == R.id.action_logout) {
+            FirebaseAuth.getInstance().signOut()
+            intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
