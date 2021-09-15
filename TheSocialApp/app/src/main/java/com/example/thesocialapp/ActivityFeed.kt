@@ -6,10 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.example.thesocialapp.databinding.ActivityFeedBinding
 
 class ActivityFeed : AppCompatActivity() {
+    private lateinit var contacts: ArrayList<Contact>
     private lateinit var binding: ActivityFeedBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,19 @@ class ActivityFeed : AppCompatActivity() {
         binding = ActivityFeedBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        // ...
+        // Lookup the recyclerview in activity layout
+        val rvContacts = findViewById<View>(R.id.rvContacts) as RecyclerView
+        // Initialize contacts
+        contacts = Contact.createContactsList(20)
+        // Create adapter passing in the sample user data
+        val adapter = ContactsAdapter(contacts)
+        // Attach the adapter to the recyclerview to populate items
+        rvContacts.adapter = adapter
+        // Set layout manager to position the items
+        rvContacts.layoutManager = LinearLayoutManager(this)
+        // That's all!
     }
 
     private fun verifyUserIsLoggedIn(): Boolean {

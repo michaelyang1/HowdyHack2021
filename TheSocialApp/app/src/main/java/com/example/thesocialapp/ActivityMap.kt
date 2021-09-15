@@ -62,10 +62,12 @@ class ActivityMap : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         val Evans = LatLng(30.616586, -96.339496)
         val MSC = LatLng(30.611885, -96.342063)
         val Kyle = LatLng(30.610364, -96.341214)
+        val TheRise = LatLng(30.62193, -96.34220)
 
-        mMap.addMarker(MarkerOptions().position(Evans).title("Evans Library"))
-        mMap.addMarker(MarkerOptions().position(MSC).title("Memorial Student Center"))
-        mMap.addMarker(MarkerOptions().position(Kyle).title("Kyle Field"))
+        mMap.addMarker(MarkerOptions().position(Evans).title("Evans study group"))
+        mMap.addMarker(MarkerOptions().position(MSC).title("HowdyHack"))
+        mMap.addMarker(MarkerOptions().position(Kyle).title("Career fair at Kyle Field"))
+        mMap.addMarker(MarkerOptions().position(TheRise).title("Grill at Northgate"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MSC, 16f))
 
         mMap.uiSettings.isZoomControlsEnabled = true
