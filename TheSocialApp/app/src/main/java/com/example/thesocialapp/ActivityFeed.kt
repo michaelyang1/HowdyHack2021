@@ -18,7 +18,6 @@ class ActivityFeed : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        FirebaseAuth.getInstance().signOut()
 
         // check if user is signed in
         if (!verifyUserIsLoggedIn()) {
@@ -43,27 +42,27 @@ class ActivityFeed : AppCompatActivity() {
         // That's all!
     }
 
+    /** Check if user is logged into the app */
     private fun verifyUserIsLoggedIn(): Boolean {
-        // check if user is logged into the app
         val uid = FirebaseAuth.getInstance().uid
         Log.e("UID", uid.toString())
 
         return if (uid == null) {
             val intent = Intent(this, Login::class.java)
-            // intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
-            // finish()
             false
         } else {
             true
         }
     }
 
+    /** Load menu onto action bar */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_feed, menu)
         return true
     }
 
+    /** Used to handle user menu clicks on action bar */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 

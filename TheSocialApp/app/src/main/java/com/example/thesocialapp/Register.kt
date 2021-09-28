@@ -30,6 +30,7 @@ class Register : AppCompatActivity() {
         }
     }
 
+    /** Register the user using FirebaseAuth */
     private fun performRegister() {
         val email = binding.emailRegister.text.toString()
         val password = binding.passwordRegister.text.toString()
@@ -53,6 +54,7 @@ class Register : AppCompatActivity() {
             }
     }
 
+    /** Save user information into Firebase realtime database */
     private fun saveUserToFirebaseDatabase() {
         val uid = FirebaseAuth.getInstance().uid ?: "" //elvis operator
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
@@ -79,6 +81,7 @@ class Register : AppCompatActivity() {
     }
 }
 
+/** Class to hold key user information */
 class User(val uid: String, val name: String, val email: String) { // put this into a module file
     constructor() : this("", "", "") // default no argument constructor
 }

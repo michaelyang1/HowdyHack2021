@@ -2,24 +2,26 @@
 package com.example.thesocialapp
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.example.thesocialapp.databinding.ActivityMapBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.*
 import com.google.firebase.auth.FirebaseAuth
 
 class ActivityMap : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -44,6 +46,7 @@ class ActivityMap : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        // used to retrieve current user location on map
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
@@ -63,11 +66,21 @@ class ActivityMap : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         val MSC = LatLng(30.611885, -96.342063)
         val Kyle = LatLng(30.610364, -96.341214)
         val TheRise = LatLng(30.62193, -96.34220)
+        val Rec = LatLng(30.60723, -96.34331)
+        val Sbisa = LatLng(30.61719, -96.34394)
 
-        mMap.addMarker(MarkerOptions().position(Evans).title("Evans study group"))
-        mMap.addMarker(MarkerOptions().position(MSC).title("HowdyHack"))
-        mMap.addMarker(MarkerOptions().position(Kyle).title("Career fair at Kyle Field"))
-        mMap.addMarker(MarkerOptions().position(TheRise).title("Grill at Northgate"))
+        mMap.addMarker(MarkerOptions().position(Evans).title("Evans Study Group").icon(
+            bitmapDescriptorFromVector(baseContext, R.drawable.ic_baseline_library_books_24)))
+        mMap.addMarker(MarkerOptions().position(MSC).title("HowdyHack").icon(
+            bitmapDescriptorFromVector(baseContext, R.drawable.ic_baseline_computer_24)))
+        mMap.addMarker(MarkerOptions().position(Kyle).title("Career Fair at Kyle Field").icon(
+            bitmapDescriptorFromVector(baseContext, R.drawable.ic_baseline_work_24)))
+        mMap.addMarker(MarkerOptions().position(TheRise).title("Grill at Northgate").icon(
+            bitmapDescriptorFromVector(baseContext, R.drawable.ic_baseline_outdoor_grill_24)))
+        mMap.addMarker(MarkerOptions().position(Rec).title("Intramural Basketball").icon(
+            bitmapDescriptorFromVector(baseContext, R.drawable.ic_baseline_sports_basketball_24)))
+        mMap.addMarker(MarkerOptions().position(Sbisa).title("Sbisa Food Festival").icon(
+            bitmapDescriptorFromVector(baseContext, R.drawable.ic_baseline_fastfood_24)))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MSC, 16f))
 
         mMap.uiSettings.isZoomControlsEnabled = true
@@ -95,7 +108,6 @@ class ActivityMap : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
             // Got last known location. In some rare situations this can be null.
-            // 3
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
@@ -129,12 +141,23 @@ class ActivityMap : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
     override fun onMarkerClick(p0: Marker?) = false
 
+    /** Retrieve user permission for current location */
     private fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
             return
+        }
+    }
+
+    /** Convert a vector asset to bitmap descriptor for customized event marker on map */
+    private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+        return ContextCompat.getDrawable(context, vectorResId)?.run {
+            setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+            val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+            draw(Canvas(bitmap))
+            BitmapDescriptorFactory.fromBitmap(bitmap)
         }
     }
 }

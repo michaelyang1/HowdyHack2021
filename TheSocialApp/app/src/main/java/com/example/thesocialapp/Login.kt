@@ -29,6 +29,7 @@ class Login : AppCompatActivity() {
 
     }
 
+    /** Log user into app */
     private fun performLogin() {
         val email = binding.emailLogin.text.toString()
         val password = binding.passwordLogin.text.toString()

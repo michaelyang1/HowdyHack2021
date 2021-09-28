@@ -1,5 +1,6 @@
 package com.example.thesocialapp
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,13 +23,21 @@ class ContactsAdapter (private val mContacts : List <Contact>) : RecyclerView.Ad
         return ViewHolder(contactView)
     }
 
+    /** Bind information to recyclerview adapter */
     override fun onBindViewHolder(viewHolder: ContactsAdapter.ViewHolder, position: Int) {
         val contact: Contact = mContacts[position]
         val textView = viewHolder.nameTextView;
         val button = viewHolder.messageButton;
 
         textView.setText(contact.name)
-        button.text = if (contact.isOnline) "RSVP" else "Closed"
+        // change contact status depending on if online
+        if (contact.isOnline) {
+            button.text = "RSVP"
+            button.setBackgroundColor(Color.parseColor("green"))
+        } else {
+            button.text = "Closed"
+            button.setBackgroundColor(Color.parseColor("red"))
+        }
 
     }
 
